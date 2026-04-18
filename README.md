@@ -56,3 +56,28 @@ The project uses CMake for easy building on your own PC.
   5. Create build directory and navigate there(**mkdir build & cd build**)
   6. Configure the project (**cmake ..**)
   7. Compile the project (**cmake --build .**)
+  8. Now you can navigate to proper directories and run
+     - a) Tests: (**cd tests/Debug & LogAnalyzerTests.exe**)
+     - b) Main project: (**cd Debug & LogAnalyzer.exe**)
+
+# How it works?
+The query engine uses **query planning strategy** combined with filtering.
+  1. **Query Plan Creation**
+     Each filter (level, source, timestamp, message) is transformed into ``QueryStep``
+     Each step contains:
+       - reference to matching log IDS (or range)
+       - estimated result size
+     Then all steps are sorted by ascending size (most selective first).
+  2. **Base Set Selection**
+     The engine starts with the most selective step:
+       - If it's an index - directly copy matching IDs
+       - If it's a timestamp range - construct a subset from sorted timestamps.
+     If the smalles step is empty - query exits early.
+  3. **Filtering**
+     The engine:
+       - Iterates over current result
+       - Removes elements that do not match conditions
+ 4. **Matching Strategy**
+       - Index-based filters - ``std::binary_search()`` on sorted vectors
+       - Timestamp filters - direct comaprision (``<``, ``>``)
+     
