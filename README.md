@@ -41,6 +41,10 @@ You can mix them however you need to.
 
 Usage example is simple: ``file=logs.txt level=ERROR source=Payment msg=Failed start=2023-10-25T10:00:00 end=2023-10-25T10:25:00``
 
+# CLI
+Command Line Interface is supported, all you need to do is just run a command like this:
+``LogAnalyzer.exe file=logs.txt level=INFO msg=Transaction``
+
 # Building
 The project uses CMake for easy building on your own PC.
   ## Requirements
