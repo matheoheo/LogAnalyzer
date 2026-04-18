@@ -22,3 +22,37 @@ It supports both:
   3. Interactive CLI Mode.
   4. Dynamic log file switching during run-time.
 
+# Required Strucute
+To properly read and index the data, file must keep following structure of log to be valid for this analyzer:
+
+``[TIMESTAMP] [LOG_LEVEL] [SOURCE] Message``
+
+# Commands
+To use the application, there are 6 commands that you can use to make your filtering easy:
+  ```
+    file=<path>      (Required) Path to the log file
+    level=<value>    Filter by log level (e.g., INFO, ERROR)
+    source=<value>   Filter by source component
+    msg=<value>      Search for a phrase in the message
+    start=<iso>      Start time (format: YYYY-MM-DDTHH:MM:SS)
+    end=<iso>        End time (format: YYYY-MM-DDTHH:MM:SS)
+  ```
+You can mix them however you need to.
+
+Usage example is simple: ``file=logs.txt level=ERROR source=Payment msg=Failed start=2023-10-25T10:00:00 end=2023-10-25T10:25:00``
+
+# Building
+The project uses CMake for easy building on your own PC.
+  ## Requirements
+  - C++20
+  - CMake
+  - Git
+
+  ## How To Build (for windows)
+  1. Open cmd
+  2. Navigate to where you want to clone your project (**cd C:/Projects**)
+  3. Clone the repository (**git clone https://github.com/matheoheo/LogAnalyzer.git**)
+  4. Enter the project folder (**cd LogAnalyzer**)
+  5. Create build directory and navigate there(**mkdir build & cd build**)
+  6. Configure the project (**cmake ..**)
+  7. Compile the project (**cmake --build .**)
